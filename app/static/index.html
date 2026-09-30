@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMX 灯具地址编排台</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>DMX 灯具地址编排台</h1>
+  <div id="version-badge"></div>
+</header>
+
+<nav>
+  <button data-tab="library" class="active">灯具型录</button>
+  <button data-tab="fixtures">灯具实例</button>
+  <button data-tab="lines">线路与保留区</button>
+  <button data-tab="plan">地址编排</button>
+  <button data-tab="published">已发布</button>
+</nav>
+
+<main>
+  <div id="toast" class="hidden"></div>
+
+  <!-- 型录 -->
+  <section id="tab-library">
+    <h2>导入灯具型录</h2>
+    <p class="hint">粘贴 JSON，格式：[{"name":"型号","modes":[{"name":"模式","channels":8}]}]，或选择 JSON 文件。</p>
+    <textarea id="library-json" rows="6" spellcheck="false"
+      placeholder='[{"name":"LED Par 64","modes":[{"name":"3CH","channels":3},{"name":"8CH","channels":8}]}]'></textarea>
+    <div class="row">
+      <input type="file" id="library-file" accept=".json,application/json">
+      <button id="btn-import">导入型录</button>
+    </div>
+    <h2>已导入型号</h2>
+    <div id="model-list"></div>
+  </section>
+
+  <!-- 灯具实例 -->
+  <section id="tab-fixtures" class="hidden">
+    <h2>新增灯具</h2>
+    <div class="row">
+      <input id="fx-name" placeholder="灯具名称，如 PAR-01">
+      <select id="fx-model"><option value="">— 选择型号 —</option></select>
+      <select id="fx-mode"><option value="">— 选择模式 —</option></select>
+      <button id="btn-add-fixture">添加</button>
+    </div>
+    <h2>灯具列表</h2>
+    <table id="fixture-table">
+      <thead><tr><th>ID</th><th>名称</th><th>通道数</th><th>当前地址</th><th>锁定</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- 线路与保留区 -->
+  <section id="tab-lines" class="hidden">
+    <h2>线路（最多 4 条 × 512 通道）</h2>
+    <div class="row">
+      <input id="line-name" placeholder="线路名称，如 Universe A">
+      <button id="btn-add-line">添加线路</button>
+    </div>
+    <div id="line-list"></div>
+  </section>
+
+  <!-- 地址编排 -->
+  <section id="tab-plan" class="hidden">
+    <h2>地址编排</h2>
+    <div class="row">
+      <button id="btn-preview" class="primary">求解预览</button>
+      <button id="btn-publish" class="primary" disabled>发布此预览</button>
+      <span id="plan-status"></span>
+    </div>
+    <div id="plan-result"></div>
+  </section>
+
+  <!-- 已发布 -->
+  <section id="tab-published" class="hidden">
+    <h2>已发布地址表</h2>
+    <div class="row">
+      <span id="published-info"></span>
+      <a href="/api/download.csv" download><button>下载 CSV</button></a>
+    </div>
+    <table id="published-table">
+      <thead><tr><th>ID</th><th>灯具</th><th>线路</th><th>起始</th><th>结束</th><th>通道数</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

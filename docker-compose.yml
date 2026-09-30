@@ -1,0 +1,11 @@
+services:
+  dmx-planner:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - dmx-data:/data
+    restart: unless-stopped
+
+volumes:
+  dmx-data:
